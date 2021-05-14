@@ -22,7 +22,10 @@
 //import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
-  name: 'User'
+  name: 'User',
+  beforeCreate(){
+    console.log("UC")
+  }
 }
 </script>
 <style scoped>

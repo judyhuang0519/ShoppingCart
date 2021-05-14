@@ -13,7 +13,7 @@ export default {
     name:"SidebarComponent",
     props:{  
         "sidebarItems":{
-            default:[{
+            default:() => [{
                 name:"s_Home",
                 href:"/"
             },

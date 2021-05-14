@@ -6,59 +6,85 @@
     :fields="fields" 
     dark head-variant="light" 
     table-variant="secondary"
+    tbody-tr-class="d-flex row-cols-auto"
+    thead-tr-class="d-flex row-cols-auto"
+    class="text-center"
+    style="font-size:1.5rem"
     >
-    <template #cell(addButton)>
-        <b-button @click="add">Add</b-button>
+    <template #cell(addNum)='current_item'>
+        <b-form-input type="number" class="input" v-model.number.lazy="current_item.item.add_num" @change="(input)=>{if(Number(input)<=0)current_item.item.add_num=1}"></b-form-input>
+    </template>
+    <template #cell(addButton)='current_item'>
+        <div class="d-flex justify-content-around" >
+            <b-button class="addBtn" @click="addToShopList(current_item.item)">Add</b-button>
+        </div>
     </template>
     </b-table>
-{{num}}
 </div>
 </template>
 <script>
+import * as item from '@/api/ItemsAPI'
 export default {
     name:'ItemList',
     data(){
         return{
-            num:1,
+            items:[],
+            //num:1,
             fields:[
                 {
-                    key:'id',
-                    label:'name'
+                    key:'item_name',
+                    label:'Name',
+                    class:'col'
                 },
                 {
-                    key:'text',
-                    label:'content'
+                    key:'item_price',
+                    label:'Price',
+                    class:'col'
+                },
+                {
+                    key:'addNum',
+                    label:'addNum',
+                    class: "col-2"
                 },
                 {
                     key:'addButton',
-                    label:'addbutton'
-                }
-            ],
-            items:[
-                {
-                    id:'01',
-                    text:'a'
-                },
-                {
-                    id:'01',
-                    text:'a'
-                },
-                {
-                    id:'01',
-                    text:'a'
+                    label:'addbutton',
+                    class: "col"
                 }
             ]
+
         }
     },
+    async created(){
+        try {
+            this.items = await item.fetch();
+            this.items.forEach(element => {this.$set(element,'add_num',1)
+            });
+            console.log(typeof(this.items))
+            console.log(this.items)
+        } catch (error) {
+            console.log(error)
+        }  
+    },
+   destroyed(){
+       console.log("iD")
+   },
+        
     methods:{
-        add(){
-            this.num++
-            //console.log(this.num)
-
-        }
+        addToShopList(current_item){
+            this.$eventbus.$emit('addMessage',{...current_item})
+            //this.$emit('addMessage',{...current_item})
+        },
+        /*show(){
+            this.items.push({name:"new",price:5})
+        }*/
     }
+    
 }
 </script>
-<style>
-
+<style scoped>
+.input,.addBtn{
+     text-align:center;
+     font-size: 1.5rem
+}
 </style>

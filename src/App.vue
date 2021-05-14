@@ -10,31 +10,30 @@
       </template>
       </header-component>
       <main-component class="flex-grow-1 main_content">
-          <router-view>
-          </router-view>
+        <router-view >
+        </router-view>
+        <keep-alive>
+          <shop-list v-show= "isShow"></shop-list>
+        </keep-alive>
       </main-component>
-      
       <footer-component>
       </footer-component>
-
-    
-    <!--<menu-component
-      :menuTitle= "menuData.name"
-      :menuItems= "menuData.childMenus"
-    >
-    </menu-component>-->
-    
-    
   </div>
 </template>
 <script>
-import headerComponent from '@/components/HeaderComponent.vue'
-import NavbarComponent from '@/components/NavbarComponent.vue'
+import HeaderComponent from '@/components/structure/HeaderComponent.vue'
+import NavbarComponent from '@/components/structure/NavbarComponent.vue'
+import MainComponent from './components/structure/MainComponent.vue'
+import FooterComponent from './components/structure/FooterComponent.vue'
+import ShopList from './components/shopList.vue'
 export default {
   name: "App",
   components:{
-    headerComponent,
-    NavbarComponent
+    HeaderComponent,
+    NavbarComponent,
+    MainComponent,
+    FooterComponent,
+    ShopList
 
   },
   data(){
@@ -42,6 +41,11 @@ export default {
       headerTitle:"",
       navbarData: navbarData,
       //menuData: menuData
+    }
+  },
+  computed:{
+    isShow(){
+      return (this.$route.name == 'ShopCart' || this.$route.name == 'Home')
     }
   }
 }
@@ -57,6 +61,15 @@ const navbarData=[{
 },
 {
     //id:"002",
+    name:"Shopping Cart",
+    href:"/shopcart"
+},
+{
+    //id:"002",
+    name:"DB Test",
+    href:"/dbtest"
+},
+{
     name:"User",
     href:"/user"
 }]
@@ -101,26 +114,7 @@ const navbarData=[{
 }
 
 #app .main_content{
+  color: var(--light);
   background-color: var(--secondary);
 }
-/*#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}*/
 </style>

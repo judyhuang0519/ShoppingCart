@@ -1,16 +1,15 @@
 <template>
     <div>
         <slot name="menu">
-            No Menu
         </slot>
-        <section>
-            Hello
-        </section>
+        <slot>
+
+        </slot>
     </div>
 </template>
 <script>
 export default {
-    name:'main-component'
+    name:'MainComponent'
 }
 </script>
 <style scoped>

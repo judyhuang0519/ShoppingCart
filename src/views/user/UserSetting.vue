@@ -1,6 +1,6 @@
 <template>
   <div class="userSetting">
-    <h1>userSetting</h1>
+    <h1>This is a userSetting page</h1>
   </div>
 </template>
 <script>
