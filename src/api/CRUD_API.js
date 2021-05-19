@@ -1,34 +1,16 @@
-import { Promise } from 'core-js'
+/*import { Promise } from 'core-js'
 import {get,post} from '../axios/request'
 //import qs from 'qs'
 //const url = "/item"
-export async function create(table,data){
-    try {
-        //console.log("[[")
-        let response = await post(`/${table}`,data)
-        return res_process(response.data)
-    } catch (error) {
-        errorHandler(error)
-        return Promise.reject(error)
-    }
-}
-export async function read(table,params){
-    try {
-        //console.log("[[")
-        let response = await get(`/${table}`,params)
-        return res_process(response.data)
-    } catch (error) {
-        errorHandler(error)
-        return Promise.reject(error)
-    }
-}
-export async function fetch(table){
+
+
+/*export async function fetch(table){
     try {
         //console.log("[[")
         let response = await get(`/${table}/all`)
         //check(response)
         //console.log(response)
-        /*console.log(typeof(response.data))*/
+        /*console.log(typeof(response.data))
         return res_process(response.data)
     } catch (error) {
         errorHandler(error)
@@ -37,10 +19,12 @@ export async function fetch(table){
 }
 
 export async function add(table, add_data){
+    
     try {
+        console.log("@")
         //req_data = check(data)
         console.log(add_data)
-        let response = await post(`/${table}/add`, add_data)
+        let response = await post(`/${table}`, add_data)
         //console.log(response.data)
         console.log(response)
         return res_process(response)
@@ -51,7 +35,7 @@ export async function add(table, add_data){
 }
 export async function del(table,params_data){
     try {
-        //console.log("del"+url)
+        console.log("del")
         console.log("B")
         console.log(params_data)
         
@@ -121,7 +105,7 @@ export async function search(table,params_data){
         return error
     }
 }*/
-function res_process(res){
+/*function res_process(res){
     let msg = ""
     if(res.error){
         msg += res.error

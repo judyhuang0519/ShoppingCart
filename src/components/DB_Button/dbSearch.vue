@@ -17,7 +17,7 @@
     </div>
 </template>
 <script>
-import {search} from '../../api/CRUD_API'
+//import {search} from '../../api/CRUD_API'
 import ModalForm from './ModalForm.vue'
 export default {
   components: { ModalForm },
@@ -95,23 +95,12 @@ export default {
         }
     },
     methods:{
-        update_table(data){
-            this.$emit("update", this.table,data)
-        },
-        async search(){
-            try{
-                let post_data=this.$refs[this.table].extract_form()
-                console.log(post_data)
-
-                let result = await search(this.table,post_data)
-                this.update_table(result.data)
-                if(result.msg){
-                    alert(result.msg)
-                }
-            }catch(e){
-                alert(e.msg)
-            }
+        search(){
+            let form_data=this.$refs[this.table].extract_form()
+            
+            this.$emit("search",this.table,form_data)
             this.$bvModal.hide('search')
+            console.log("!")
             this.$refs[this.table].reset_form()
         },
     }

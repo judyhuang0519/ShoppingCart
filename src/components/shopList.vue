@@ -13,24 +13,36 @@
     class="text-center"
     style="font-size:1.5rem"
     >
-    <template #cell(num)='current_item'>
-        <b-form-input class="input" v-model.number.lazy="current_item.item.num" @change="(input)=>{if(Number(input)<=0)current_item.item.num=1}"></b-form-input>
+    <template #cell(item_num)='current_item'>
+        <b-form-input 
+        type="number" 
+        class="input" 
+        v-model.number.lazy="current_item.item.item_num" 
+        @change="(input)=>{if(Number(input)<=0)current_item.item.item_num=1}"></b-form-input>
     </template>
     <template #cell(button)='current_item'>
         <div class="d-flex justify-content-around" >
-            <b-button class="delBtn" @click="delItem(current_item.item,current_item.index)">Del</b-button>
-            <b-button class="addBtn" @click="addItem(current_item.item)">Add</b-button>
+            <b-button 
+                class="delBtn" 
+                @click="delItem(current_item.item,current_item.index)">
+                Del
+            </b-button>
+            <b-button 
+                class="addBtn" 
+                @click="addItem(current_item.item)">
+                Add
+            </b-button>
         </div>
     </template>
 
     </b-table>
     <h4>Total {{sub}}</h4>
-    <b-button @click='delAll'>delAll</b-button>
-    <b-button @click='(e)=>{submit(e)}'>Submit</b-button>
+    <b-button @click='reset'>Reset</b-button>
+    <b-button @click='submit'>Submit</b-button>
 </div>
 </template>
 <script>
-import {postItems} from '@/api/ItemsAPI'
+import {post} from "../axios/request"
 
 export default {
     name:'shopList',
@@ -51,7 +63,7 @@ export default {
                     
                 },
                 {
-                    key:'num',
+                    key:'item_num',
                     label:'num',
                     class: "col-2"
 
@@ -92,17 +104,17 @@ export default {
                 return availableItem.item_id==adding_item.item_id
             })
             if(item){
-                item.num+=adding_item.add_num;
+                item.item_num+=adding_item.add_num;
             }else{
                 let add_item = {...adding_item};
-                this.$set(add_item,'num',add_item.add_num)
+                this.$set(add_item,'item_num',add_item.add_num)
                 delete add_item.add_num
                 this.shopItems.push(add_item)
             }
             
         },        
         addItem(item){
-            item.num++
+            item.item_num++
             //console.log(this.num)
 
         },
@@ -112,23 +124,21 @@ export default {
             this.shopItems.splice(index,1)
 
         },
-        delAll(){
+        reset(){
             this.shopItems.splice(0)
         },
-        async submit(e){
+        async submit(){
             try {
-                let data = {...this.shopItems}
-                let res = await postItems(data);
+                let data = {user_id:2,order_data:[...this.shopItems]}
+
+                let res = await post('/order',data);
                 console.log(res)
-                
+                this.reset()
             } catch (error) {
                 console.log(error)
             }
-            console.log("A"+e.target.state)
+            
         },
-        show(e){
-            console.log(e.target)
-        }
     }
     
 }

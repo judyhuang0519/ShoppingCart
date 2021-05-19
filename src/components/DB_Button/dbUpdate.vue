@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-button v-b-modal.update size="lg" variant="success">UPDATE</b-button>
-        <b-modal id="update" title="UPDATE ITEM" >
+        <b-modal id="update" :title="`UPDATE ${table.toUpperCase()}`" >
             <b-form>
                 <modal-form 
                     :ref="table" 
@@ -28,7 +28,7 @@
     </div>
 </template>
 <script>
-import {update} from '../../api/CRUD_API'
+//import {update} from '../../api/CRUD_API'
 import ModalForm from './ModalForm.vue'
 export default {
   components: { ModalForm },
@@ -60,30 +60,13 @@ export default {
     },
     data(){
         return{
-            
-            
+  
         }
     },
     methods:{
-        update_table(data){
-            this.$emit("update", this.table,data)
-        },
-        async update(){
-            try{
-                /*let data={
-                    "item_id":this.item_id,
-                    "new_name":this.new_name,
-                    "new_price":this.new_price
-                }*/
-                let post_data= this.$refs[this.table].extract_form()
-                let result = await update(this.table,post_data)
-                this.update_table(result.data)
-                if(result.msg){
-                    alert(result.msg)
-                }
-            }catch(e){
-                alert(e.msg)
-            }                
+        update(){
+            let form_data= this.$refs[this.table].extract_form() 
+            this.$emit("update",this.table,form_data)   
             this.$bvModal.hide('update')
             this.$refs[this.table].reset_form()
         }

@@ -23,7 +23,8 @@
 </div>
 </template>
 <script>
-import * as item from '@/api/ItemsAPI'
+//import * as item from '@/api/ItemsAPI'
+import * as req from '../axios/request'
 export default {
     name:'ItemList',
     data(){
@@ -57,7 +58,8 @@ export default {
     },
     async created(){
         try {
-            this.items = await item.fetch();
+            let result = await req.get(`/item`);
+            this.items = result.data
             this.items.forEach(element => {this.$set(element,'add_num',1)
             });
             console.log(typeof(this.items))
@@ -75,9 +77,7 @@ export default {
             this.$eventbus.$emit('addMessage',{...current_item})
             //this.$emit('addMessage',{...current_item})
         },
-        /*show(){
-            this.items.push({name:"new",price:5})
-        }*/
+
     }
     
 }

@@ -27,7 +27,7 @@
     </div>
 </template>
 <script>
-import {add} from '../../api/CRUD_API'
+//import {add} from '../../api/CRUD_API'
 import ModalForm from './ModalForm.vue'
 export default {
   components: { ModalForm },
@@ -61,23 +61,12 @@ export default {
         }
     },
     methods:{
-        update_table(data){
-            this.$emit("update", this.table,data)
-        },
-        async add(){
-            try{
-                let post_data=this.$refs[this.table].extract_form()
-                let result = await add(this.table, post_data)
-                this.update_table(result.data)
-                if(result.msg){
-                    alert(result.msg)
-                }
-            }catch(e){
-                alert(e.msg)
-            }
+        add(){
+            let form_data=this.$refs[this.table].extract_form()
+            this.$emit("add",this.table,form_data)
             this.$bvModal.hide('add')
             this.$refs[this.table].reset_form()
-        },
+        }
     }
 }
 </script>

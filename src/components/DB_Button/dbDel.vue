@@ -17,7 +17,7 @@
     </div>
 </template>
 <script>
-import {del} from '../../api/CRUD_API'
+//import {del} from '../../api/CRUD_API'
 import ModalForm from './ModalForm.vue'
 export default {
   components: { ModalForm },
@@ -36,11 +36,6 @@ export default {
                     label:"Item ID",
                     key:"id",
                     value:"",
-                    /*option:
-                    {
-                        text: "ID", 
-                        value:"id"//isSelect
-                    },*/
                     num_type:true
                 },
                 {   
@@ -68,20 +63,15 @@ export default {
     created(){
     },
     methods:{
-        update_table(data){
-            this.$emit("update", this.table,data)
-        },
-        async del(){
-            try{
-                let post_data= this.$refs[this.table].extract_form()
-                let result = await del(this.table,post_data)
+        del(){
+            let form_data= this.$refs[this.table].extract_form()
+            console.log(":"+form_data)
+            this.$emit("del",this.table,form_data)
+                /*let result = await del(this.table,post_data)
                 this.update_table(result.data)
                 if(result.msg){
                     alert(result.msg)
-                }
-            }catch(e){
-                alert(e.msg)
-            }
+                }*/
             this.$bvModal.hide('del')
             this.$refs[this.table].reset_form()
         },

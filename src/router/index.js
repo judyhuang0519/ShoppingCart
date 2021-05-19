@@ -97,6 +97,20 @@ const routes = [
         components:{
           DBTable: ()=>import('../views/dbItem.vue')
         }
+      },
+      {
+        path: 'order',
+        name:"DB_order",
+        components:{
+          DBTable: ()=>import('../views/dbOrder.vue')
+        }
+      },
+      {
+        path: 'detail',
+        name:"DB_detail",
+        components:{
+          DBTable: ()=>import('../views/dbDetail.vue')
+        }
       }
     ]
   },

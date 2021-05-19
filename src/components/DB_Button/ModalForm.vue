@@ -102,9 +102,6 @@ export default {
             ]
         },
     },
-    destroyed(){
-        console.log("DDD")
-    },
     data(){
         return{
             data_mode:[],
